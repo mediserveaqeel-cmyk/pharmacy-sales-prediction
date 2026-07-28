@@ -51,7 +51,7 @@ st.markdown("""
 # Sidebar
 # ----------------------------
 
-st.sidebar.image("images/logo.png", width=170)
+#st.sidebar.image("images/logo.png", width=170)
 
 st.sidebar.title("Mediserve Pharmacy")
 
@@ -70,8 +70,8 @@ Machine Learning.
 
 left,right = st.columns([1,4])
 
-with left:
-    st.image("images/logo.png", width=140)
+#with left:
+    #st.image("images/logo.png", width=140)
 
 with right:
 
