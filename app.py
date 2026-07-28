@@ -46,7 +46,6 @@ st.markdown("""
 
 logo = Path("logo.png")
 
-# Sidebar Logo
 if logo.exists():
     st.sidebar.image(str(logo), width=180)
 else:
@@ -58,7 +57,7 @@ st.sidebar.success("Healthcare • Trust • Care")
 st.sidebar.divider()
 
 st.sidebar.info(
-    """
+"""
 This application predicts monthly pharmacy sales using
 Machine Learning.
 """
@@ -130,7 +129,7 @@ st.markdown("""
 
 st.divider()
 
-st.success("👈 Open **Sales Prediction** from the left sidebar.")
+st.success("👈 Open **Sales Prediction** from the navigation menu.")
 
 st.markdown(
 """
