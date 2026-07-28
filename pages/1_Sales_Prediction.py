@@ -121,7 +121,7 @@ if st.button("🚀 Predict Monthly Sales", use_container_width=True):
 
         st.metric(
             "Predicted Monthly Sales",
-            f"£{prediction:,.2f}"
+            f"${prediction:,.2f}"
         )
 
         st.subheader("Input Summary")
