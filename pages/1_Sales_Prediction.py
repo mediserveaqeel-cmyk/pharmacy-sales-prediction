@@ -117,8 +117,7 @@ if st.button("🚀 Predict Monthly Sales", use_container_width=True):
 
     })
 
-    prediction=model.predict(X)[0]
-
+    prediction = float(model.predict(X)[0])
     st.success("Prediction Successful")
 
     st.metric(
