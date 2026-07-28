@@ -1,17 +1,18 @@
 import streamlit as st
+from pathlib import Path
 
-# ----------------------------
+# --------------------------------------------------
 # Page Configuration
-# ----------------------------
+# --------------------------------------------------
 st.set_page_config(
     page_title="Mediserve Pharmacy",
     page_icon="💊",
     layout="wide"
 )
 
-# ----------------------------
-# Custom CSS
-# ----------------------------
+# --------------------------------------------------
+# CSS
+# --------------------------------------------------
 st.markdown("""
 <style>
 
@@ -26,59 +27,52 @@ st.markdown("""
 }
 
 .subtitle{
-    font-size:20px;
+    font-size:22px;
     color:#2E7D32;
-}
-
-.card{
-    background:white;
-    padding:25px;
-    border-radius:15px;
-    box-shadow:0 4px 10px rgba(0,0,0,.15);
-    text-align:center;
 }
 
 .footer{
     text-align:center;
-    color:grey;
-    margin-top:40px;
+    color:gray;
+    margin-top:50px;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
-# ----------------------------
-# Sidebar
-# ----------------------------
+# --------------------------------------------------
+# Logo
+# --------------------------------------------------
 
-from pathlib import Path
+logo = Path("logo.png")
 
-logo_path = Path("logo.png")
-
-st.write("Current directory:", Path.cwd())
-st.write("Files:", [f.name for f in Path(".").iterdir()])
-
-if logo_path.exists():
-    st.sidebar.image(str(logo_path), width=170)
+# Sidebar Logo
+if logo.exists():
+    st.sidebar.image(str(logo), width=180)
 else:
     st.sidebar.warning("Logo not found.")
 
 st.sidebar.title("Mediserve Pharmacy")
-
 st.sidebar.success("Healthcare • Trust • Care")
 
 st.sidebar.divider()
 
-st.sidebar.info("""
+st.sidebar.info(
+    """
 This application predicts monthly pharmacy sales using
 Machine Learning.
-""")
+"""
+)
 
-# ----------------------------
+# --------------------------------------------------
 # Header
-# ----------------------------
+# --------------------------------------------------
 
-left,right = st.columns([1,4])
+left, right = st.columns([1,4])
+
+with left:
+    if logo.exists():
+        st.image(str(logo), width=150)
 
 with right:
 
@@ -94,59 +88,57 @@ with right:
 
 st.divider()
 
-st.markdown("# 💊 AI Powered Pharmacy Sales Prediction System")
+# --------------------------------------------------
+# Welcome
+# --------------------------------------------------
+
+st.header("💊 AI Powered Pharmacy Sales Prediction System")
 
 st.write("""
-Welcome to the Mediserve Pharmacy Sales Prediction Dashboard.
+Welcome to the **Mediserve Pharmacy Dashboard**.
 
-This system uses **Multiple Linear Regression** to estimate monthly pharmacy sales based on business-related factors.
+This system uses **Multiple Linear Regression**
+to estimate pharmacy monthly sales using business data.
 """)
 
-st.divider()
-
-# ----------------------------
+# --------------------------------------------------
 # KPI Cards
-# ----------------------------
+# --------------------------------------------------
 
 c1,c2,c3,c4 = st.columns(4)
 
-with c1:
-    st.metric("Algorithm","Linear Regression")
-
-with c2:
-    st.metric("Features","7")
-
-with c3:
-    st.metric("Status","Ready")
-
-with c4:
-    st.metric("Version","1.0")
+c1.metric("Algorithm","Linear Regression")
+c2.metric("Features","7")
+c3.metric("Status","Ready")
+c4.metric("Version","1.0")
 
 st.divider()
 
-st.subheader("🚀 What can this application do?")
+st.subheader("Application Features")
 
 st.markdown("""
-- 💊 Predict Monthly Pharmacy Sales
+✅ Monthly Sales Prediction
 
-- 📊 Display Model Analytics
+✅ Machine Learning Model
 
-- 📈 Show Prediction Results
+✅ Business Analytics
 
-- 📁 Upload CSV Files (Coming Soon)
+🚧 CSV Upload (Coming Soon)
 
-- 📥 Download Prediction Reports (Coming Soon)
+🚧 Download Prediction Report (Coming Soon)
 """)
 
 st.divider()
 
-st.success("Use the left sidebar to open the Sales Prediction page.")
+st.success("👈 Open **Sales Prediction** from the left sidebar.")
 
 st.markdown(
 """
 <div class='footer'>
 
 © 2026 Mediserve Pharmacy
+
+Healthcare • Trust • Care
 
 Developed by Muhammad Aqeel
 
