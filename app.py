@@ -1,189 +1,149 @@
 import streamlit as st
-import pandas as pd
-import joblib
 
-# -----------------------------
+# ----------------------------
 # Page Configuration
-# -----------------------------
+# ----------------------------
 st.set_page_config(
-    page_title="Pharmacy Sales Prediction System",
+    page_title="Mediserve Pharmacy",
     page_icon="💊",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    layout="wide"
 )
 
-# -----------------------------
+# ----------------------------
 # Custom CSS
-# -----------------------------
+# ----------------------------
 st.markdown("""
 <style>
 
-.main{
-    background-color:#f5f7fa;
+.stApp{
+    background:#F5F7FA;
 }
 
-h1{
+.main-title{
+    font-size:42px;
+    font-weight:bold;
     color:#1565C0;
 }
 
-.stButton>button{
-    width:100%;
-    background:#1565C0;
-    color:white;
-    border-radius:10px;
-    height:3em;
-    font-size:18px;
-    font-weight:bold;
+.subtitle{
+    font-size:20px;
+    color:#2E7D32;
 }
 
-.metric-box{
+.card{
     background:white;
-    padding:15px;
-    border-radius:12px;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15);
     text-align:center;
-    box-shadow:0px 0px 8px rgba(0,0,0,.1);
+}
+
+.footer{
+    text-align:center;
+    color:grey;
+    margin-top:40px;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
-# -----------------------------
-# Load Model
-# -----------------------------
-model = joblib.load("linear_model.pkl")
-
-# -----------------------------
+# ----------------------------
 # Sidebar
-# -----------------------------
-st.sidebar.image(
-    "https://img.icons8.com/color/96/pharmacy-shop.png",
-    width=100
-)
+# ----------------------------
 
-st.sidebar.title("💊 Pharmacy Sales Predictor")
+st.sidebar.image("images/logo.png", width=170)
+
+st.sidebar.title("Mediserve Pharmacy")
+
+st.sidebar.success("Healthcare • Trust • Care")
+
+st.sidebar.divider()
 
 st.sidebar.info("""
-This application predicts the expected monthly sales
-of a pharmacy using a trained Multiple Linear Regression model.
+This application predicts monthly pharmacy sales using
+Machine Learning.
 """)
 
-st.sidebar.success("Model: Multiple Linear Regression")
-
-# -----------------------------
+# ----------------------------
 # Header
-# -----------------------------
-st.title("💊 Pharmacy Monthly Sales Prediction System")
+# ----------------------------
 
-st.write(
-"""
-Predict pharmacy monthly sales based on business factors.
-
-Enter the pharmacy information below and click **Predict Sales**.
-"""
-)
-
-st.divider()
-
-# -----------------------------
-# Input Form
-# -----------------------------
-left,right = st.columns(2)
+left,right = st.columns([1,4])
 
 with left:
-
-    advertising = st.number_input(
-        "📢 Advertising Spend",
-        min_value=0.0,
-        value=5000.0
-    )
-
-    foot = st.number_input(
-        "🚶 Foot Traffic",
-        min_value=0,
-        value=300
-    )
-
-    prescriptions = st.number_input(
-        "💊 Number of Prescriptions",
-        min_value=0,
-        value=200
-    )
-
-    population = st.number_input(
-        "🏙 Local Population",
-        min_value=0,
-        value=10000
-    )
+    st.image("images/logo.png", width=140)
 
 with right:
 
-    distance = st.number_input(
-        "📍 Distance to Competitor (km)",
-        min_value=0.0,
-        value=2.5
+    st.markdown(
+        "<div class='main-title'>MEDISERVE PHARMACY</div>",
+        unsafe_allow_html=True
     )
 
-    size = st.number_input(
-        "🏪 Store Size (sqft)",
-        min_value=0,
-        value=1500
-    )
-
-    staff = st.number_input(
-        "👨‍⚕️ Staff Count",
-        min_value=1,
-        value=8
+    st.markdown(
+        "<div class='subtitle'>Healthcare • Trust • Care</div>",
+        unsafe_allow_html=True
     )
 
 st.divider()
 
-# -----------------------------
-# Prediction
-# -----------------------------
-if st.button("Predict Monthly Sales"):
+st.markdown("# 💊 AI Powered Pharmacy Sales Prediction System")
 
-    data = pd.DataFrame({
-        "Advertising_Spend":[advertising],
-        "Foot_Traffic":[foot],
-        "Num_Prescriptions":[prescriptions],
-        "Local_Population":[population],
-        "Distance_to_Competitor_km":[distance],
-        "Store_Size_sqft":[size],
-        "Staff_Count":[staff]
-    })
+st.write("""
+Welcome to the Mediserve Pharmacy Sales Prediction Dashboard.
 
-    prediction = model.predict(data)[0][0]
+This system uses **Multiple Linear Regression** to estimate monthly pharmacy sales based on business-related factors.
+""")
 
-    st.success("Prediction Completed Successfully!")
-
-    c1,c2,c3 = st.columns(3)
-
-    with c1:
-        st.metric("Predicted Monthly Sales", f"£{prediction:,.2f}")
-
-    with c2:
-        st.metric("Algorithm","Linear Regression")
-
-    with c3:
-        st.metric("Features Used","7")
-
-    st.divider()
-
-    st.subheader("Input Summary")
-
-    st.dataframe(data,use_container_width=True)
-
-# -----------------------------
-# Footer
-# -----------------------------
 st.divider()
 
-st.caption(
+# ----------------------------
+# KPI Cards
+# ----------------------------
+
+c1,c2,c3,c4 = st.columns(4)
+
+with c1:
+    st.metric("Algorithm","Linear Regression")
+
+with c2:
+    st.metric("Features","7")
+
+with c3:
+    st.metric("Status","Ready")
+
+with c4:
+    st.metric("Version","1.0")
+
+st.divider()
+
+st.subheader("🚀 What can this application do?")
+
+st.markdown("""
+- 💊 Predict Monthly Pharmacy Sales
+
+- 📊 Display Model Analytics
+
+- 📈 Show Prediction Results
+
+- 📁 Upload CSV Files (Coming Soon)
+
+- 📥 Download Prediction Reports (Coming Soon)
+""")
+
+st.divider()
+
+st.success("Use the left sidebar to open the Sales Prediction page.")
+
+st.markdown(
 """
+<div class='footer'>
+
+© 2026 Mediserve Pharmacy
+
 Developed by Muhammad Aqeel
 
-Machine Learning Project
-
-Multiple Linear Regression | Python | Scikit-Learn | Streamlit
-"""
+</div>
+""",
+unsafe_allow_html=True
 )
