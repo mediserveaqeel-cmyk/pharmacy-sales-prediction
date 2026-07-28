@@ -51,7 +51,17 @@ st.markdown("""
 # Sidebar
 # ----------------------------
 
-st.sidebar.image("logo.png", width=170)
+from pathlib import Path
+
+logo_path = Path("logo.png")
+
+st.write("Current directory:", Path.cwd())
+st.write("Files:", [f.name for f in Path(".").iterdir()])
+
+if logo_path.exists():
+    st.sidebar.image(str(logo_path), width=170)
+else:
+    st.sidebar.warning("Logo not found.")
 
 st.sidebar.title("Mediserve Pharmacy")
 
@@ -69,9 +79,6 @@ Machine Learning.
 # ----------------------------
 
 left,right = st.columns([1,4])
-
-with left:
-   st.image("logo.png", width=140)
 
 with right:
 
