@@ -1,155 +1,123 @@
 import streamlit as st
 import pandas as pd
 import joblib
+from pathlib import Path
 
-# -----------------------
-# Load Model
-# -----------------------
-model = joblib.load("linear_model.pkl")
-
+# -------------------------
+# Page Config
+# -------------------------
 st.set_page_config(
     page_title="Sales Prediction",
     page_icon="💊",
     layout="wide"
 )
 
-# -----------------------
-# CSS
-# -----------------------
-st.markdown("""
-<style>
+# -------------------------
+# Load Model
+# -------------------------
+model = joblib.load("linear_model.pkl")
 
-.big-font{
-    font-size:35px;
-    font-weight:bold;
-    color:#1565C0;
-}
+logo = Path("logo.png")
 
-.result-card{
-    background:#E8F5E9;
-    padding:25px;
-    border-radius:15px;
-    border-left:8px solid #2E7D32;
-}
+# -------------------------
+# Sidebar
+# -------------------------
 
-</style>
-""", unsafe_allow_html=True)
+if logo.exists():
+    st.sidebar.image(str(logo), width=150)
 
-# -----------------------
+st.sidebar.title("Sales Prediction")
+
+# -------------------------
 # Header
-# -----------------------
+# -------------------------
 
-col1,col2 = st.columns([1,5])
+left,right = st.columns([1,4])
 
-with col1:
-    st.image("images/logo.png", width=110)
+with left:
+    if logo.exists():
+        st.image(str(logo), width=120)
 
-with col2:
-    st.markdown("<div class='big-font'>Sales Prediction</div>", unsafe_allow_html=True)
-    st.caption("Healthcare • Trust • Care")
+with right:
+    st.title("💊 Monthly Sales Prediction")
+    st.write("Enter the pharmacy information below.")
 
 st.divider()
 
-# -----------------------
+# -------------------------
 # Input Form
-# -----------------------
+# -------------------------
 
-st.subheader("🏥 Pharmacy Information")
+col1,col2 = st.columns(2)
 
-left,right = st.columns(2)
-
-with left:
+with col1:
 
     advertising = st.number_input(
-        "📢 Advertising Spend (£)",
-        min_value=0.0,
-        value=5000.0,
-        step=100.0
+        "Advertising Spend",
+        value=5000.0
     )
 
-    traffic = st.number_input(
-        "🚶 Foot Traffic",
-        min_value=0,
+    foot = st.number_input(
+        "Foot Traffic",
         value=300
     )
 
     prescriptions = st.number_input(
-        "💊 Number of Prescriptions",
-        min_value=0,
+        "Prescriptions",
         value=200
     )
 
     population = st.number_input(
-        "🏙 Local Population",
-        min_value=0,
+        "Population",
         value=10000
     )
 
-with right:
+with col2:
 
     distance = st.number_input(
-        "📍 Distance to Competitor (km)",
-        min_value=0.0,
+        "Distance to Competitor",
         value=2.5
     )
 
     size = st.number_input(
-        "🏪 Store Size (sqft)",
-        min_value=0,
+        "Store Size",
         value=1500
     )
 
     staff = st.number_input(
-        "👨‍⚕️ Staff Count",
-        min_value=1,
+        "Staff Count",
         value=8
     )
 
 st.divider()
 
-# -----------------------
+# -------------------------
 # Predict Button
-# -----------------------
+# -------------------------
 
-if st.button("🚀 Predict Monthly Sales", use_container_width=True):
+if st.button("Predict Monthly Sales", use_container_width=True):
 
-    input_data = pd.DataFrame({
+    X = pd.DataFrame({
+
         "Advertising_Spend":[advertising],
-        "Foot_Traffic":[traffic],
+        "Foot_Traffic":[foot],
         "Num_Prescriptions":[prescriptions],
         "Local_Population":[population],
         "Distance_to_Competitor_km":[distance],
         "Store_Size_sqft":[size],
         "Staff_Count":[staff]
+
     })
 
-    prediction = model.predict(input_data)[0][0]
+    prediction = model.predict(X)[0][0]
 
-    st.success("Prediction completed successfully.")
+    st.success("Prediction Successful")
 
-    st.markdown("## 💷 Estimated Monthly Sales")
-
-    st.markdown(
-        f"""
-<div class="result-card">
-
-# £{prediction:,.2f}
-
-### Prediction Successful
-
-</div>
-""",
-        unsafe_allow_html=True
+    st.metric(
+        "Predicted Monthly Sales",
+        f"£{prediction:,.2f}"
     )
 
-    st.divider()
+    st.subheader("Input Summary")
 
-    c1,c2,c3 = st.columns(3)
-
-    c1.metric("Algorithm","Linear Regression")
-    c2.metric("Features","7")
-    c3.metric("Prediction","Success")
-
-    st.subheader("📋 Input Summary")
-
-    st.dataframe(input_data, use_container_width=True)
+    st.dataframe(X, use_container_width=True)
