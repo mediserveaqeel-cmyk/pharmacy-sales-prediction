@@ -104,12 +104,31 @@ to estimate pharmacy monthly sales using business data.
 # KPI Cards
 # --------------------------------------------------
 
-c1,c2,c3,c4 = st.columns(4)
+# --------------------------------------------------
+# Dashboard Metrics
+# --------------------------------------------------
 
-c1.metric("Algorithm","Linear Regression")
-c2.metric("Features","7")
-c3.metric("Status","Ready")
-c4.metric("Version","1.0")
+c1, c2, c3, c4 = st.columns(4)
+
+c1.metric(
+    label="🤖 Algorithm",
+    value="Multiple Linear Regression"
+)
+
+c2.metric(
+    label="🎯 Accuracy",
+    value="88%"
+)
+
+c3.metric(
+    label="📊 Features",
+    value="7"
+)
+
+c4.metric(
+    label="✅ Status",
+    value="Ready"
+)
 
 st.divider()
 
